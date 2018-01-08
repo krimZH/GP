@@ -1,9 +1,10 @@
 package cn.krim.gp.entities.questions;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
 
 import lombok.Data;
 /**
@@ -12,11 +13,15 @@ import lombok.Data;
  *
  */
 @Data
-@MappedSuperclass
+@Entity
+@Table(name="common_question")
 public class CommonQuestion {
 	/**主键*/
 	@Id @GeneratedValue
-	protected int questionId;
+	protected Integer questionId;
+	@Column
+	/**类型*/
+	private Integer type;
 	/**题目内容*/
 	@Column
 	protected String questionContent;

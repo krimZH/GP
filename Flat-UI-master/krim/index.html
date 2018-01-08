@@ -26,10 +26,11 @@
         <div class="login-screen">
           <div class="login-icon">
             <img src="../img/login/icon.png" alt="Welcome to Mail App" />
-            <h4>Welcome to <small>Mail App</small></h4>
+            <h4>Welcome to <small>HomeworkOL</small></h4>
           </div>
 
           <div class="login-form">
+            <from>
             <div class="form-group">
               <input type="text" class="form-control login-field" value="" placeholder="Enter your name" id="login-name" />
               <label class="login-field-icon fui-user" for="login-name"></label>
@@ -40,19 +41,33 @@
               <label class="login-field-icon fui-lock" for="login-pass"></label>
             </div>
 
-            <a class="btn btn-primary btn-lg btn-block" href="#">Log in</a>
-            <a class="login-link" href="#">Lost your password?</a>
+            <button id="submit" type="submit" class="btn btn-primary btn-lg btn-block">Log in</button>
+            <button class="btn btn-primary btn-lg btn-block btn-warning" onclick="alert('请联系任课老师,或发邮件给837656665@qq.com')">Lost your password?</button>
+          </from>
           </div>
+            <span id="msg" style="padding-left: 100px"></span>
         </div>
       </div>      
     </div> <!-- /container -->
-    <script src="../../dist/js/vendor/jquery.min.js"></script>
-    <script src="../../dist/js/vendor/video.js"></script>
-    <script src="../../dist/js/flat-ui.min.js"></script>
-    <script src="../../docs/assets/js/application.js"></script>
-
+    <script src="../dist/js/vendor/jquery.min.js"></script>
+    <script src="../dist/js/vendor/video.js"></script>
+    <script src="../dist/js/flat-ui.min.js"></script>
+    <script src="../docs/assets/js/application.js"></script>
     <script>
-      videojs.options.flash.swf = "../dist/js/vendors/video-js.swf"
+      $(':input').blur(function (props){
+          if($(this).val()=="" || $(this).val()==null){
+            $('#msg').html('It could not be null');
+            $(':submit').attr("disabled",true);
+            $(this).parent().addClass('has-error');
+          }else{
+            $(this).parent().removeClass('has-error');
+            $(':submit').attr("disabled",false);
+            $('#msg').html('');
+          }
+      });
+      $("#submit").click(function (props){
+        $('input').blur();
+      });
     </script>
   </body>
 </html>

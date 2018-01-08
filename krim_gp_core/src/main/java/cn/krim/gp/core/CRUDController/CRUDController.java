@@ -1,28 +1,39 @@
 package cn.krim.gp.core.CRUDController;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.krim.gp.core.modle.ReturnData;
+import cn.krim.gp.core.repository.CommonQuestionRepository;
+import cn.krim.gp.core.repository.PictureQuestionRepository;
 import cn.krim.gp.core.repository.UserRespository;
-import cn.krim.gp.core.utils.MyReflectUtils;
+import cn.krim.gp.entities.questions.CommonQuestion;
+import cn.krim.gp.entities.questions.PictureQuestion;
 import cn.krim.gp.entities.users.User;
 
 @RestController("/CRUD")
 public class CRUDController {
 	@Autowired UserRespository	userRespository;
+	@Autowired CommonQuestionRepository commonQuestionRepository;
+	@Autowired PictureQuestionRepository pictureQuestionRepository;
 	
 	@RequestMapping(name="/create",method=RequestMethod.POST)
-	public <T>T create(Class<T> clz,Map<String, Object> fields){
+	public <S> ReturnData create(S s){
 		try {
-			MyReflectUtils.getInstaceAndSetFields(clz, fields);
+			Object data;
+			if(s instanceof CommonQuestion){
+				data =commonQuestionRepository.save((CommonQuestion)s);
+			}else if(s instanceof PictureQuestion){
+				data =pictureQuestionRepository.save((PictureQuestion)s);
+			}else if(s instanceof User){
+				data =userRespository.save((User)s);
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		}
-	 	return null;
+		return null;
 	}
 	
 	@RequestMapping(name="/delete",method=RequestMethod.DELETE)
