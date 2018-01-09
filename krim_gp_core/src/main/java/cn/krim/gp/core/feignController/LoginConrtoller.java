@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.krim.gp.core.modle.users.User;
 import cn.krim.gp.core.service.LoginService;
-import cn.krim.gp.entities.users.User;
 
 @RestController
 public class LoginConrtoller {

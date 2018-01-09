@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.krim.gp.entities.users.User;
+import cn.krim.gp.core.modle.users.User;
 
 public class MyReflectUtils {
 	private static Map<String, Map<String, Field>> mainMap = new HashMap<String, Map<String,Field>>();
