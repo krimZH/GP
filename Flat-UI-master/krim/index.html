@@ -30,14 +30,14 @@
           </div>
 
           <div class="login-form">
-            <from>
+            <from action="/login" method="post">
             <div class="form-group">
-              <input type="text" class="form-control login-field" value="" placeholder="Enter your name" id="login-name" />
+              <input id="userId" type="text" class="form-control login-field" value="" placeholder="Enter your name" id="login-name" />
               <label class="login-field-icon fui-user" for="login-name"></label>
             </div>
 
             <div class="form-group">
-              <input type="password" class="form-control login-field" value="" placeholder="Password" id="login-pass" />
+              <input id="pass" type="password" class="form-control login-field" value="" placeholder="Password" id="login-pass" />
               <label class="login-field-icon fui-lock" for="login-pass"></label>
             </div>
 
@@ -45,7 +45,7 @@
             <button class="btn btn-primary btn-lg btn-block btn-warning" onclick="alert('请联系任课老师,或发邮件给837656665@qq.com')">Lost your password?</button>
           </from>
           </div>
-            <span id="msg" style="padding-left: 100px"></span>
+            <span id="msg"></span>
         </div>
       </div>      
     </div> <!-- /container -->
@@ -54,19 +54,25 @@
     <script src="../dist/js/flat-ui.min.js"></script>
     <script src="../docs/assets/js/application.js"></script>
     <script>
+      var vaild = true;
       $(':input').blur(function (props){
-          if($(this).val()=="" || $(this).val()==null){
-            $('#msg').html('It could not be null');
-            $(':submit').attr("disabled",true);
+        var value = $(this).val();
+        if(value==""||value.trim()==""){
             $(this).parent().addClass('has-error');
-          }else{
+            $('#msg').html('Name or password could not be null');
+            $(':submit').attr("disabled",true);
+        }else{
             $(this).parent().removeClass('has-error');
-            $(':submit').attr("disabled",false);
-            $('#msg').html('');
-          }
+        }
+        if($('.has-error').length==0){
+           $('#msg').html('');
+           $(":submit").attr('disabled',false);
+           vaild = true;
+        }
       });
       $("#submit").click(function (props){
         $('input').blur();
+        return vaild;
       });
     </script>
   </body>
