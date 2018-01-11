@@ -1,0 +1,9 @@
+#Thymeleaf
+[TOC]
+####Thymeleaf复用布局
+```
+ 1.在html头中引入 xmlns:th="http://www.thymeleaf.org"
+ 2.在一个完整的html文件中定义模块，并在标签中声明th:fragment="xxx"  如 <div th:fragment="header" ></div>  path为common/header.html
+ 3.在需要复用的文件中使用 <div th:replace="path::selector"></div>  如 <div th:replace="common/header::header"></div> 这样的话就可以复用了
+```
+

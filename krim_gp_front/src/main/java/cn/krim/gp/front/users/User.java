@@ -1,5 +1,7 @@
 package cn.krim.gp.front.users;
 
+import java.time.Clock;
+
 import lombok.Data;
 
 
@@ -19,4 +21,14 @@ public class User {
 	private Long createTime;
 
 	private Long updateTime;
+
+	
+	public String getIdentify() {
+		// User identify with userId , password and hashCode
+		return this.userId+this.password+this.hashCode();
+	}
+	
+	public User(){
+		this.createTime=Clock.systemUTC().millis();
+	}
 }

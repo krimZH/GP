@@ -1,5 +1,7 @@
 package cn.krim.gp.front.controller;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +29,9 @@ public class LoginController {
 		return result;
 	}
 	
-	@RequestMapping("/")
-	public String index(){
-		return "login";
+	@RequestMapping("/{path}")
+	public String test(@PathParam("path")String path){
+		return path;
 	}
+	
 }
