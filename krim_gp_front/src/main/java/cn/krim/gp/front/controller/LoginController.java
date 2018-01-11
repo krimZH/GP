@@ -4,6 +4,7 @@ import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,14 +18,14 @@ public class LoginController {
 	@Autowired LoginFeignService loginFeignService;
 	
 	@RequestMapping("/vaildLogin")
-	@ResponseBody
-	public String login(@RequestParam("login-name") String userId,@RequestParam("login-pass")String password){
+	public String login(@RequestParam("login-name") String userId,@RequestParam("login-pass")String password,Model model){
 		String result = null;
 		User u = loginFeignService.loginFeign(userId, password);
 		if(u!=null){
-			result = "success";
+			result = "console";
 		}else{
-			result = "faild";
+			model.addAttribute("errMsg", "用户名或者密码错误");
+			result = "login";
 		}
 		return result;
 	}
