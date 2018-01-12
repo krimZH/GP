@@ -5,11 +5,10 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.krim.gp.core.modle.users.User;
+import cn.krim.gp.core.model.users.User;
 
 public class MyReflectUtils {
-	private static Map<String, Map<String, Field>> mainMap = new HashMap<String, Map<String,Field>>();
-	public static Object getInstaceAndSetFields(Class<?> clazz,Map<String, Object> fields) throws Exception{
+	public static Object getInstaceAndSetFields(Class<?> clazz,Map<Object, Object> fields) throws Exception{
 		//获取实例对象
 		Object o = clazz.newInstance();
 		//获取字段列表
@@ -36,13 +35,18 @@ public class MyReflectUtils {
         }
 		return o;		
 	}
-	private static String getSetMethodByField(String name) {
+	public static String getSetMethodByField(String name) {
 		char[] cs=name.toCharArray();
         cs[0]-=32;
         return "set"+String.valueOf(cs);
 	}
+	public static String getGetMethodByField(String name) {
+		char[] cs=name.toCharArray();
+        cs[0]-=32;
+        return "get"+String.valueOf(cs);
+	}
 	public static void main(String[] args) throws Exception {
-		Map<String, Object> map = new HashMap<>();
+		Map<Object, Object> map = new HashMap<>();
 		map.put("userId", "krim");
 		map.put("password", "12345");
 		map.put("createTime", Long.valueOf(123032416516461687L));

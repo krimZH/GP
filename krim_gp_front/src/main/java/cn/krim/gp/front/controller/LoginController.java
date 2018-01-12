@@ -7,10 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.krim.gp.front.micService.LoginFeignService;
-import cn.krim.gp.front.users.User;
+import cn.krim.gp.front.model.users.User;
 
 @Controller
 public class LoginController {

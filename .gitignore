@@ -3,3 +3,4 @@
 
 *.yml
 /*/.settings/
+/*/target/*.jar
