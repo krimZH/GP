@@ -1,9 +1,8 @@
 package cn.krim.gp.core.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import cn.krim.gp.core.model.questions.CommonQuestion;
+import cn.krim.gp.core.repository.base.BaseRepository;
 
-public interface CommonQuestionRepository extends JpaRepository<CommonQuestion, Long> {
+public interface CommonQuestionRepository extends  BaseRepository<CommonQuestion,Integer> {
 
 }

@@ -5,9 +5,9 @@ import java.io.Serializable;
 import cn.krim.gp.core.functional.GetId;
 
 
-public  class AbstratEntity implements GetId {
+public  class MyEntity implements GetId {
 	
-	public AbstratEntity(){
+	public MyEntity(){
 		
 	}
 

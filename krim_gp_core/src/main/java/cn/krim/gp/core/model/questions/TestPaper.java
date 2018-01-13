@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import cn.krim.gp.core.model.AbstratEntity;
+import cn.krim.gp.core.model.MyEntity;
 import cn.krim.gp.core.model.users.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Table(name="test_paper")
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class TestPaper extends AbstratEntity {
+public class TestPaper extends MyEntity {
 	@Id @GeneratedValue
 	private  Integer testId;
 	/**选择题*/

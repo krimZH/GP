@@ -27,5 +27,10 @@ public class ReturnData implements Serializable{
 	//状态码
 	private Integer code;
 	
+	public ReturnData(Object data,String msg,Integer code){
+		this.data=data;
+		this.msg=msg;
+		this.code=code;
+	}
 		
 }

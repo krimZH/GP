@@ -6,7 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import cn.krim.gp.core.model.AbstratEntity;
+import cn.krim.gp.core.annotation.Fuzzy;
+import cn.krim.gp.core.model.MyEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 /**
@@ -18,13 +19,16 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name="common_question")
 @EqualsAndHashCode(callSuper=false)
-public class CommonQuestion extends AbstratEntity {
+public class CommonQuestion extends MyEntity {
 	/**主键*/
 	@Id @GeneratedValue
 	protected Integer questionId;
 	@Column
 	/**类型*/
 	private Integer type;
+	/**题目简称*/
+	@Column @Fuzzy
+	private String questionName;
 	/**题目内容*/
 	@Column
 	protected String questionContent;

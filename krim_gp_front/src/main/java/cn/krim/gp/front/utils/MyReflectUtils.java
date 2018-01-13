@@ -7,12 +7,9 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
-import com.google.gson.JsonObject;
 
 import cn.krim.gp.front.model.http.ModelFields;
-import cn.krim.gp.front.model.users.User;
 
 public class MyReflectUtils {
 	
@@ -84,21 +81,34 @@ private static Map<String, Map<String, Field>> mainMap = Maps.newHashMap();
         return "get"+String.valueOf(cs);
 	}
 	
-	public static Map<Object,Object> fieldsMap(String path,String json) throws Exception{
+	public static Map<Object,Object> fieldsMap(String json) throws Exception{
 		JSONArray fn = JSON.parseObject(json).getJSONArray("fieldName");
 		JSONArray fv = JSON.parseObject(json).getJSONArray("fieldValue");
 		Object[] fieldName =  fn.toArray();
-		Object[] fieldVaule = fv.toArray();
-			if(fieldName.length!=fieldVaule.length){
+		Object[] fieldValue = fv.toArray();
+			if(fieldName.length!=fieldValue.length){
 				throw new Exception("查询数据中出现了丢失字段的现象，请确认没有必填项为空");
 			}
 			Map<Object, Object> fildsMap = Maps.newHashMap();
 			for (int i = 0; i < fieldName.length; i++) {
-				fildsMap.put(fieldName[i], fieldVaule[i]);
+				fildsMap.put(fieldName[i], fieldValue[i]);
 			}
 		return fildsMap;
 	}
 	
+	public static Map<String, Object[]> map2Array(String json) throws Exception{
+		JSONArray fn = JSON.parseObject(json).getJSONArray("fieldName");
+		JSONArray fv = JSON.parseObject(json).getJSONArray("fieldValue");
+		Object[] fieldName =  fn.toArray();
+		Object[] fieldValue = fv.toArray();
+		if(fieldName.length!=fieldValue.length||fieldName.length==0){
+			throw new Exception("查询数据中出现了丢失字段的现象，请确认没有必填项为空");
+		}
+		Map<String, Object[]> map2Array = Maps.newHashMap();
+		map2Array.put("fieldName", fieldName);
+		map2Array.put("fieldValue", fieldValue);
+		return map2Array;
+	}
 	
 	public static void main(String[] args) throws Exception {
 		ModelFields mf = new ModelFields();

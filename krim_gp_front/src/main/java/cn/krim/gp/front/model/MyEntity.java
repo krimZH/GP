@@ -5,9 +5,9 @@ import java.io.Serializable;
 import cn.krim.gp.front.functional.SetId;
 
 
-public  class AbstratEntity implements SetId{
+public  class MyEntity implements SetId{
 	
-	public AbstratEntity(){
+	public MyEntity(){
 		
 	}
 

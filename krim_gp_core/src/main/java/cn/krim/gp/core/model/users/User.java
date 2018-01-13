@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import cn.krim.gp.core.model.AbstratEntity;
+import cn.krim.gp.core.model.MyEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 @Table(name="user")
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class User extends AbstratEntity{
+public class User extends MyEntity{
 	@Id 
 	private String userId;
 	@Column
