@@ -23,6 +23,9 @@ import lombok.EqualsAndHashCode;
 public class TestPaper extends MyEntity {
 	@Id @GeneratedValue
 	private  Integer testId;
+	@Column
+	/**科目id*/
+	private Integer subjectId;
 	/**选择题*/
 	@Column
 	private String multipleChoices;

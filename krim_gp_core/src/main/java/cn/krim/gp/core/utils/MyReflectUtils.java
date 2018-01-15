@@ -8,8 +8,9 @@ import java.util.Map;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 
-import cn.krim.gp.core.model.users.User;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class MyReflectUtils {
 	
 	private static Map<String, Map<String, Field>> mainMap = new HashMap<String, Map<String,Field>>();
@@ -57,11 +58,20 @@ public class MyReflectUtils {
             	if("class java.lang.String".equals(fieldType)){
                 	m = clazz.getDeclaredMethod(setmethodName, String.class);
             	}else if("class java.lang.Integer".equals(fieldType)){
-            		m = clazz.getDeclaredMethod(setmethodName, Integer.class);                	
+            		m = clazz.getDeclaredMethod(setmethodName, Integer.class);
+            		if(fields.get(field.getName()) instanceof String){
+            			fields.put(field.getName(), Integer.parseInt((String) fields.get(field.getName())));
+            		}
             	}else if("class java.lang.Double".equals(fieldType)){
             		m = clazz.getDeclaredMethod(setmethodName, Double.class);
+            		if(fields.get(field.getName()) instanceof String){
+            			fields.put(field.getName(), Double.parseDouble((String) fields.get(field.getName())));
+            		}
             	}else if("class java.lang.Long".equals(fieldType)){
             		m = clazz.getDeclaredMethod(setmethodName, Long.class);
+            		if(fields.get(field.getName()) instanceof String){
+            			fields.put(field.getName(), Long.parseLong((String) fields.get(field.getName())));
+            		}
             	}
             	//调用set方法
             	m.invoke(o, fields.get(field.getName()));

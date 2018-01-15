@@ -24,14 +24,14 @@ public class CrudController <T extends MyEntity> {
 	@Autowired CrudService crudService;
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/core/create",method=RequestMethod.POST)
-	public T saveEntity(@RequestBody Map<Object, Object> fieldMap,@RequestParam("entityPath")String path,@RequestParam("entity")String entity) throws Exception{
+	@RequestMapping(value="/core/save",method=RequestMethod.POST)
+	public ReturnData saveEntity(@RequestBody Map<Object, Object> fieldMap,@RequestParam("entityPath")String path,@RequestParam("entity")String entity) throws Exception{
 		try {
 			Class<?> clazz = Class.forName(path);
 			T t = (T)MyReflectUtils.getInstaceAndSetFields(clazz, fieldMap);
-			return crudService.saveEntity((T)t, entity);
+			return new ReturnData(crudService.saveEntity((T)t, entity),"成功",200);
 		} catch (Exception e) {
-			throw new Exception(String.format("create entity error cause:%s", e.getMessage()));
+			return new ReturnData(null,String.format("create entity error cause:%s", e.getMessage()),700);
 		}
 	}	
 	@SuppressWarnings("unchecked")

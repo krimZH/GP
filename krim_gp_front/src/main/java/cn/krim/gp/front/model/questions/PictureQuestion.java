@@ -14,6 +14,8 @@ public class PictureQuestion{
 	/**类型*/
 	
 	private Integer type;
+	/**科目id*/
+	private Integer subjectId;
 	/**题目内容*/
 	
 	protected String questionContent;

@@ -24,6 +24,9 @@ public class PictureQuestion extends MyEntity {
 	/**主键*/
 	@Id @GeneratedValue
 	protected Integer questionId;
+	@Column
+	/**科目id*/
+	private Integer subjectId;
 	/**类型*/
 	@Column
 	private Integer type;

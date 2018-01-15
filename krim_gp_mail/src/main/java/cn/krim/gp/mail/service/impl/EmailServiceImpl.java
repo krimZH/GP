@@ -1,10 +1,16 @@
 package cn.krim.gp.mail.service.impl;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
+import javax.mail.Address;
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailException;
@@ -12,6 +18,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import cn.krim.gp.mail.config.EmailConfig;
 import cn.krim.gp.mail.service.EmailService;
@@ -28,14 +35,20 @@ public class EmailServiceImpl implements EmailService {
     @Autowired  
     private JavaMailSender mailSender;  	
       
-    public void sendSimpleMail(String sendTo, String titel, String content) {  
-        SimpleMailMessage message = new SimpleMailMessage();  
-        message.setFrom(emailConfig.getEmailFrom());  
-        message.setTo(sendTo);  
-        message.setSubject(titel);  
-        message.setText(content);  
-        try {
-			mailSender.send(message);
+    public void sendSimpleMail(String sendTo, String titel, String content) throws MessagingException {  
+       String[] mailToAddress = sendTo.split(",");
+       Assert.notEmpty(mailToAddress,"收件人为空");
+       SimpleMailMessage[] smms = new SimpleMailMessage[mailToAddress.length];
+       for (int i = 0; i < smms.length; i++) {
+		smms[i] = new SimpleMailMessage();
+		smms[i].setFrom(emailConfig.getEmailFrom());
+		smms[i].setSubject(titel);
+		smms[i].setTo(mailToAddress[i]);
+		smms[i].setText(content);
+       }
+       try {
+    	   log.info(String.format("send to %s,titel %s,content %s", sendTo,titel,content));
+		   mailSender.send(smms);;
 		} catch (MailException e) {
 			log.error(e.getMessage());
 		}  
@@ -61,6 +74,5 @@ public class EmailServiceImpl implements EmailService {
          } catch (MessagingException e) {  
              log.error("发送带附件的邮件时发生异常！", e);  
          }  
-    }  
-  
+    }
 }

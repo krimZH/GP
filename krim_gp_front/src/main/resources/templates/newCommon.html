@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-    <title>Template</title>
+    <title>Insert title</title>
     <meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
 
     <!-- Loading Bootstrap -->
-    <link href="../dist/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="dist/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Loading Flat UI -->
-    <link href="../dist/css/flat-ui.css" rel="stylesheet">
-    <link href="../docs/assets/css/demo.css" rel="stylesheet">
+    <link href="dist/css/flat-ui.css" rel="stylesheet">
+    <link href="docs/assets/css/demo.css" rel="stylesheet">
 
-    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="shortcut icon" href="img/favicon.ico">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
     <!--[if lt IE 9]>
@@ -21,6 +21,7 @@
     <![endif]-->
   </head>
   <body>
+    <header th:replace="common/header :: header"></header>
     <div class="container" style="margin-top: 50px">
       <div class="row">
         <div class="col-md-12">
@@ -39,7 +40,7 @@
               <textarea name="analysis" class="form-control" rows="3" placeholder="答案解析"></textarea>
             </div>
             <div class="form-group">
-              <select name="subject" data-toggle="select" class="form-control select select-default">
+              <select name="subjectId" data-toggle="select" class="form-control select select-default">
                 <option value="10">应用光学</option>
                 <option value="11">原子物理</option>
                 <option value="12">电磁场理论</option>
@@ -70,19 +71,19 @@
             </div>
             </div>
     </div> <!-- /container -->
-    <script src="../dist/js/vendor/jquery.min.js"></script>
-    <script src="../dist/js/vendor/video.js"></script>
-    <script src="../dist/js/flat-ui.min.js"></script>
-    <script src="../docs/assets/js/application.js"></script>
+    <script src="dist/js/vendor/jquery.min.js"></script>
+    <script src="dist/js/vendor/video.js"></script>
+    <script src="dist/js/flat-ui.min.js"></script>
+    <script src="docs/assets/js/application.js"></script>
     <script>
-      $('#isCore').click(function(){
+    $('#isCore').click(function(){
         if($(this).val()==0){
           $(this).val(1);
         }else{
           $(this).val(0);
         }
       });
-       $("#submit").click(function (){
+    $("#submit").click(function (){
         var fieldName = [];
         var fieldValue = [];
       var fieldName = new Array();
@@ -95,34 +96,20 @@
       //类型
       fieldName.push('type');
       fieldValue.push($('input:radio[name="type"]:checked').val());
-      console.log(fieldName);
-      console.log(fieldValue);
       $.ajax({
-            url:'/saveEntity/Common',
+            url:'/saveEntity',
             type:'POST', //GET
             async:true,    //或false,是否异步
             data:{
-              'fieldName':fieldName,
-              'fieldValue':fieldValue
+              'fieldName': fieldName,
+              'fieldValue':fieldValue,
+              'entity':'Common',
+              'create':1
             },
             timeout:5000,    //超时时间
             dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-            beforeSend:function(xhr){
-                console.log(xhr)
-                console.log('发送前')
-            },
-            success:function(data,textStatus,jqXHR){
-                console.log(data)
-                console.log(textStatus)
-                console.log(jqXHR)
-            },
-            error:function(xhr,textStatus){
-                console.log('错误')
-                console.log(xhr)
-                console.log(textStatus)
-            },
-            complete:function(){
-                console.log('结束')
+            success:function(data){
+                alert(data.msg);
             }
         })
        return false;

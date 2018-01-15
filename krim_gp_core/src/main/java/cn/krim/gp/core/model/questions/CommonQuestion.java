@@ -26,6 +26,9 @@ public class CommonQuestion extends MyEntity {
 	@Column
 	/**类型*/
 	private Integer type;
+	@Column
+	/**科目id*/
+	private Integer subjectId;
 	/**题目简称*/
 	@Column @Fuzzy
 	private String questionName;

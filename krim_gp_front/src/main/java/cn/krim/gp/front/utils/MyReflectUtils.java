@@ -57,7 +57,7 @@ private static Map<String, Map<String, Field>> mainMap = Maps.newHashMap();
             	if("class java.lang.String".equals(fieldType)){
                 	m = clazz.getDeclaredMethod(setmethodName, String.class);
             	}else if("class java.lang.Integer".equals(fieldType)){
-            		m = clazz.getDeclaredMethod(setmethodName, Integer.class);                	
+            		m = clazz.getDeclaredMethod(setmethodName, Integer.class); 
             	}else if("class java.lang.Double".equals(fieldType)){
             		m = clazz.getDeclaredMethod(setmethodName, Double.class);
             	}else if("class java.lang.Long".equals(fieldType)){

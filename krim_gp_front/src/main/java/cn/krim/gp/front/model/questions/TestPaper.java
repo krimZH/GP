@@ -34,4 +34,7 @@ public class TestPaper {
 	/**更新时间*/
 	
 	private Long updateTime;
+	
+	/**科目id*/
+	private Integer subjectId;
 }

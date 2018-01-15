@@ -11,31 +11,27 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class CommonQuestion {
 	/**主键*/
-	protected Integer questionId;
+	private Integer questionId;
+	/**科目id*/
+	private Integer subjectId;
+	/**题目简称*/
+	private String questionName;
 	/**类型*/
 	private Integer type;
-	/**题目内容*/
-	
+	/**题目内容*/	
 	protected String questionContent;
-	/**答案*/
-	
+	/**答案*/	
 	protected String answer;
-	/**答案解析*/
-	
+	/**答案解析*/	
 	protected String analysis;
-	/**是否为核心题目：0=不是，1=是*/
-	
+	/**是否为核心题目：0=不是，1=是*/	
 	protected Integer core;
-	/**题目被使用次数*/
-	
+	/**题目被使用次数*/	
 	protected Integer questedCount;
-	/**正确率*/
-	
+	/**正确率*/	
 	protected Double correctRate;
-	/**创建时间*/
-	
+	/**创建时间*/	
 	protected Long createTime;
-	/**修改时间*/
-	
+	/**修改时间*/	
 	protected Long updateTime;
 }

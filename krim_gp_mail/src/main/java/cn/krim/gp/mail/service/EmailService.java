@@ -1,5 +1,7 @@
 package cn.krim.gp.mail.service;
 
+import javax.mail.MessagingException;
+
 /**
  * Email 
  * @author krim
@@ -11,8 +13,9 @@ public interface EmailService {
      * @param sendTo 收件人地址 
      * @param titel  邮件标题 
      * @param content 邮件内容 
+	 * @throws MessagingException 
      */  
-    public void sendSimpleMail(String sendTo, String titel, String content);  
+    public void sendSimpleMail(String sendTo, String titel, String content) throws MessagingException;  
       
     /** 
      * 发送带附件的简单邮件 
