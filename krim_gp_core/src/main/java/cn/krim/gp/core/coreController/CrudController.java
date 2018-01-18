@@ -57,4 +57,15 @@ public class CrudController <T extends MyEntity> {
 			return new ReturnData(null, e.getMessage(),500);
 		}		
 	}
+	
+	@RequestMapping(value="/core/updateEntity",method=RequestMethod.POST)
+	public ReturnData updateEntity(@RequestBody Map<Object, Object> fieldsMap,@RequestParam("entityPath")String path,@RequestParam("entity")String entity){
+		try {
+			Class<?> clazz = Class.forName(path);
+			return new ReturnData(crudService.updateEntity(clazz, fieldsMap,entity),"更新成功",200);
+		} catch (Exception e) {
+			return new ReturnData(null, e.getMessage(),500);
+		}
+	}
+	
 }

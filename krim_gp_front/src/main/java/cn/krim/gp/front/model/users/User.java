@@ -8,6 +8,8 @@ public class User {
 	
 	private String userId;
 	
+	private String realName;
+	
 	private String password;
 	
 	private Integer status;
@@ -15,6 +17,8 @@ public class User {
 	private Integer scoreId;
 	
 	private String className;
+	
+	private String mail;
 	
 	private Long createTime;
 	

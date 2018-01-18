@@ -3,6 +3,7 @@ package cn.krim.gp.core.utils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
@@ -38,43 +39,25 @@ public class MyReflectUtils {
 	}
 	
 	/**
-	 * 更具Class和fieldMap组装对象
+	 * 根据Class和fieldMap组装对象
 	 * @param clazz
-	 * @param fields
+	 * @param fieldsMap
 	 * @return
 	 * @throws Exception
 	 */
-	public static Object getInstaceAndSetFields(Class<?> clazz,Map<Object, Object> fields) throws Exception{
+	public static Object getInstaceAndSetFields(Class<?> clazz,Map<Object, Object> fieldsMap) throws Exception{
 		//获取实例对象
 		Object o = clazz.newInstance();
 		//获取字段列表
 		while (clazz != null) {
         	//当父类为null的时候说明到达了最上层的父类(Object类).
             for (Field field : clazz.getDeclaredFields()) {
-            	//获取field类型
-            	String fieldType = field.getGenericType().toString();
-               	String setmethodName = getSetMethodByField(field.getName());
-               	Method m = null;
-            	if("class java.lang.String".equals(fieldType)){
-                	m = clazz.getDeclaredMethod(setmethodName, String.class);
-            	}else if("class java.lang.Integer".equals(fieldType)){
-            		m = clazz.getDeclaredMethod(setmethodName, Integer.class);
-            		if(fields.get(field.getName()) instanceof String){
-            			fields.put(field.getName(), Integer.parseInt((String) fields.get(field.getName())));
-            		}
-            	}else if("class java.lang.Double".equals(fieldType)){
-            		m = clazz.getDeclaredMethod(setmethodName, Double.class);
-            		if(fields.get(field.getName()) instanceof String){
-            			fields.put(field.getName(), Double.parseDouble((String) fields.get(field.getName())));
-            		}
-            	}else if("class java.lang.Long".equals(fieldType)){
-            		m = clazz.getDeclaredMethod(setmethodName, Long.class);
-            		if(fields.get(field.getName()) instanceof String){
-            			fields.put(field.getName(), Long.parseLong((String) fields.get(field.getName())));
-            		}
-            	}
+            	//校验参数类型和方法
+            	fieldsMap = getMethodAndCheckValid(field,clazz ,fieldsMap);
+            	//获取set方法
+            	Method setmethod = (Method) fieldsMap.get("setMethod");
             	//调用set方法
-            	m.invoke(o, fields.get(field.getName()));
+               	setmethod.invoke(o, fieldsMap.get(field.getName()));
 			}
             clazz = clazz.getSuperclass(); //得到父类,然后赋给自己
         }
@@ -83,26 +66,41 @@ public class MyReflectUtils {
 	
 	/**
 	 * 根据对应的fieldName返回set方法
+	 * 检查value和field的类型一致性
 	 * @param name
 	 * @return
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
 	 */
-	public static String getSetMethodByField(String name) {
-		char[] cs=name.toCharArray();
+	public static Map<Object,Object> getMethodAndCheckValid(Field field,Class<?> clazz,Map<Object, Object> fields) throws NoSuchMethodException, SecurityException {
+		char[] cs=field.getName().toCharArray();
         cs[0]-=32;
-        return "set"+String.valueOf(cs);
+        Method m = null;
+        String fieldType = field.getGenericType().toString();
+        if("class java.lang.String".equals(fieldType)){
+        	m = clazz.getDeclaredMethod("set"+String.valueOf(cs), String.class);
+    	}else if("class java.lang.Integer".equals(fieldType)){
+    		m = clazz.getDeclaredMethod("set"+String.valueOf(cs), Integer.class);
+    		if(fields.get(field.getName()) instanceof String){
+    			fields.put(field.getName(), Integer.parseInt((String) fields.get(field.getName())));
+    		}
+    	}else if("class java.lang.Double".equals(fieldType)){
+    		m = clazz.getDeclaredMethod("set"+String.valueOf(cs), Double.class);
+    		if(fields.get(field.getName()) instanceof String){
+    			fields.put(field.getName(), Double.parseDouble((String) fields.get(field.getName())));
+    		}
+    	}else if("class java.lang.Long".equals(fieldType)){
+    		m = clazz.getDeclaredMethod("set"+String.valueOf(cs), Long.class);
+    		if(fields.get(field.getName()) instanceof String){
+    			fields.put(field.getName(), Long.parseLong((String) fields.get(field.getName())));
+    		}
+    	}
+        //将方法装到map中
+        Map<Object,Object> returnMap = Maps.newHashMap();
+        returnMap.putAll(fields);
+        returnMap.put("setMethod", m);
+        return returnMap;
 	}
-	
-	/**
-	 * 根据对应的fieldName返回get方法
-	 * @param name
-	 * @return
-	 */
-	public static String getGetMethodByField(String name) {
-		char[] cs=name.toCharArray();
-        cs[0]-=32;
-        return "get"+String.valueOf(cs);
-	}
-	
 	
 	public static Object getInstanceWithArray(Class<?> clazz,Map<String, Object[]> entityMap) throws Exception{
 		if(entityMap.size()==0) throw new Exception("loss field map");
@@ -116,26 +114,46 @@ public class MyReflectUtils {
 		return getInstaceAndSetFields(clazz, fieldsMap);
 		
 	}
+	/**
+	 * 策略:1.获取当前类的fieldMap
+	 * 	   2.用fieldsMap 的 key 找到fieldMap中对应的field
+	 * 	   3.用field找到set方法
+	 * 	   4.使用set方法装配对象
+	 * 	   5.返回对象 
+	 * @param clazz
+	 * @param t
+	 * @param fieldsMap
+	 * @return
+	 * @throws SecurityException 
+	 * @throws Exception 
+	 */
+	public static <T>T updateEntityByFieldMap(Class<?> clazz,T t,Map<Object, Object> fieldsMap) throws Exception{
+		//获得迭代器
+		Iterator<Map.Entry<Object,Object>> it =fieldsMap.entrySet().iterator();  
+		//获得fieldMap
+		Map<String, Field> fieldMap = getFieldMap(clazz);
+		//装配对象
+		try {
+			while(it.hasNext()){
+				Object key = it.next().getKey();
+				if("id".equals(key)){
+					continue;
+				}
+				Field field = fieldMap.get((String)key);
+				Map<Object,Object> invokeMap = getMethodAndCheckValid(field,clazz ,fieldsMap);				
+				Method setMethod = (Method) invokeMap.get("setMethod");				
+				setMethod.invoke(t, invokeMap.get(field.getName()));
+			}
+			return t;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new Exception(e.getMessage());
+		}
+	}
 	
 	
 	public static void main(String[] args) throws Exception {
-		/*Map<Object, Object> map = new HashMap<>();
-		map.put("userId", "krim");
-		map.put("password", "krim");
-		map.put("createTime", Long.valueOf(123032416516461687L));
-		Map<String, Field> fieldMap = getFieldMap(User.class);
-		Object[] fieldName = {"userId","password","createTime"};
-		Object[] fieldValue = {"krim","krim",Long.valueOf(123032416516461687L)};
-		for (int i = 0; i < fieldValue.length; i++) {
-			if (fieldName[i].equals(fieldMap.get(fieldName[i]).getName())) 
-				 System.out.println("find:"+fieldName[i]+" and value:"+fieldValue[i]+" and object type:"+fieldName[i].getClass()+":"+fieldValue[i].getClass());
-			
-		}*/
-		/*Object o =getInstaceAndSetFields(User.class,map);
-		if(o instanceof User){
-			System.out.println(((User) o).getUserId());
-			System.out.println(((User) o).getCreateTime());
-		}*/
+		
 		Object[] fieldName = {"status","className"};
 		Object[] fieldValue = {"1","光信1401"};
 		Map<String, Object[]> map = new HashMap<>();
@@ -144,4 +162,6 @@ public class MyReflectUtils {
 		String json = JSON.toJSONString(map);
 		System.out.println(json);
 	}
+	
+	
 }

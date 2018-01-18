@@ -19,4 +19,6 @@ public interface CrudService {
 	public ReturnData findByContitions(@RequestBody Map<String, Object[]> fieldMap,@RequestParam("entityPath")String path,@RequestParam("entity")String entity);
 	@RequestMapping(value="/core/save",method=RequestMethod.POST)
 	public ReturnData saveEntity(@RequestBody Map<Object, Object> fieldMap,@RequestParam("entityPath")String path,@RequestParam("entity")String entity);
+	@RequestMapping(value="/core/updateEntity",method=RequestMethod.POST)
+	public ReturnData updateEntity(@RequestBody Map<Object, Object> fieldsMap,@RequestParam("entityPath")String path,@RequestParam("entity")String entity);
 }

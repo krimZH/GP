@@ -2,10 +2,10 @@ package cn.krim.gp.core.model;
 
 import java.io.Serializable;
 
-import cn.krim.gp.core.functional.GetId;
+import cn.krim.gp.core.EntityBaseMthod.SimpleInterface;
 
 
-public  class MyEntity implements GetId {
+public  class MyEntity implements SimpleInterface {
 	
 	public MyEntity(){
 		
@@ -14,5 +14,10 @@ public  class MyEntity implements GetId {
 	@Override
 	public Serializable getEntityId() {
 		return null;
+	}
+
+	@Override
+	public void setEntityId(Serializable id) {
+		
 	}
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.krim.gp.front.model.users.User;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -17,8 +18,10 @@ public class HttpInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		request.setAttribute("requestStart", Clock.systemDefaultZone().millis());
-		log.info(String.format("接收到页面请求:%s", request.getPathInfo()));
+		User u =(User) request.getSession().getAttribute("User");
+		if(u==null){
+			request.getRequestDispatcher("login").forward(request, response); 
+		}
 		return false;
 	}
 
