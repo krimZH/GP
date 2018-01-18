@@ -110,17 +110,4 @@ private static Map<String, Map<String, Field>> mainMap = Maps.newHashMap();
 		return map2Array;
 	}
 	
-	public static void main(String[] args) throws Exception {
-		ModelFields mf = new ModelFields();
-		mf.setFieldName(new String[]{"userId","password"});
-		mf.setFieldValue(new Object[]{"krim","12346"});
-		String json = JSON.toJSONString(mf);
-		System.out.println(json);
-		JSONArray fn = JSON.parseObject(json).getJSONArray("fieldName");
-		JSONArray fv = JSON.parseObject(json).getJSONArray("fieldValue");
-		fn.toArray();
-		fv.toArray();
-		System.out.println(fn);
-		System.out.println(fv);
-	}
 }

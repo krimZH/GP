@@ -150,18 +150,6 @@ public class MyReflectUtils {
 			throw new Exception(e.getMessage());
 		}
 	}
-	
-	
-	public static void main(String[] args) throws Exception {
 		
-		Object[] fieldName = {"status","className"};
-		Object[] fieldValue = {"1","光信1401"};
-		Map<String, Object[]> map = new HashMap<>();
-		map.put("fieldName", fieldName);
-		map.put("fieldValue", fieldValue);
-		String json = JSON.toJSONString(map);
-		System.out.println(json);
-	}
-	
 	
 }
