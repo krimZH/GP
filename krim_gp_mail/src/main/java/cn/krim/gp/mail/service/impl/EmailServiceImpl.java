@@ -1,16 +1,10 @@
 package cn.krim.gp.mail.service.impl;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
-import javax.mail.Address;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailException;
