@@ -2,9 +2,6 @@ package cn.krim.gp.front.config;
 
 import java.util.Map;
 
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Value;
-
 import com.google.common.collect.Maps;
 
 public class BeanMap {
