@@ -1,0 +1,5 @@
+cn\krim\gateway\filter\pre\AccessFilter.class
+cn\krim\gateway\ApiGatewayApplication.class
+cn\krim\gateway\filter\processor\MyFilterProcessor.class
+cn\krim\gateway\filter\error\ExtendsEorrorFilter.class
+cn\krim\gateway\filter\error\MyErrorFilter.class
