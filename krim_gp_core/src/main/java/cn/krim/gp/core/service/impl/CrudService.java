@@ -17,7 +17,7 @@ import cn.krim.gp.core.repository.PictureQuestionRepository;
 import cn.krim.gp.core.repository.TestPaperRepository;
 import cn.krim.gp.core.repository.UserRespository;
 import cn.krim.gp.core.repository.base.BaseRepository;
-import cn.krim.gp.core.utils.MyReflectUtils;
+import cn.krim.gp.core.utils.MyReflectionUtils;
 /**
  * CURD controller  execute simple CRUD operating uniformly
  * @author krim
@@ -69,7 +69,7 @@ public class CrudService extends BaseServiceImpl {
 		T oldOne = repository.findOne((Serializable) fieldsMap.get("id"));
 		Assert.notNull(oldOne, "原纪录不存在，更新操作不合法，请检查请求参数");
 		//更新记录
-		oldOne = MyReflectUtils.updateEntityByFieldMap(clazz,oldOne, fieldsMap);
+		oldOne = MyReflectionUtils.updateEntityByFieldMap(clazz,oldOne, fieldsMap);
 		return repository.saveAndFlush(oldOne);
 	}
 	

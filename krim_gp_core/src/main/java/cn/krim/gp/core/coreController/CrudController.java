@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.krim.gp.core.model.MyEntity;
 import cn.krim.gp.core.model.ReturnData;
 import cn.krim.gp.core.service.impl.CrudService;
-import cn.krim.gp.core.utils.MyReflectUtils;
+import cn.krim.gp.core.utils.MyReflectionUtils;
 /**
  * CURD controller  execute simple CRUD operating uniformly
  * @author krim
@@ -28,7 +28,7 @@ public class CrudController <T extends MyEntity> {
 	public ReturnData saveEntity(@RequestBody Map<Object, Object> fieldMap,@RequestParam("entityPath")String path,@RequestParam("entity")String entity) throws Exception{
 		try {
 			Class<?> clazz = Class.forName(path);
-			T t = (T)MyReflectUtils.getInstaceAndSetFields(clazz, fieldMap);
+			T t = (T)MyReflectionUtils.getInstaceAndSetFields(clazz, fieldMap);
 			return new ReturnData(crudService.saveEntity((T)t, entity),"成功",200);
 		} catch (Exception e) {
 			return new ReturnData(null,String.format("create entity error cause:%s", e.getMessage()),700);
@@ -39,7 +39,7 @@ public class CrudController <T extends MyEntity> {
 	public void deleteEntity(@RequestBody Map<Object, Object> fieldMap,@RequestParam("entityPath")String path,@RequestParam("entity")String entity) throws Exception{
 		try {
 			Class<?> clazz = Class.forName(path);
-			T t = (T)MyReflectUtils.getInstaceAndSetFields(clazz, fieldMap);
+			T t = (T)MyReflectionUtils.getInstaceAndSetFields(clazz, fieldMap);
 			crudService.deleteEntity((T)t, entity);
 		} catch (Exception e) {
 			throw new Exception(String.format("delete entity error cause:%s", e.getMessage()));

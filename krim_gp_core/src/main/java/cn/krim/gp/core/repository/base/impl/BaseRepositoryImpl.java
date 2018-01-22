@@ -17,7 +17,6 @@ public class BaseRepositoryImpl<T,ID extends Serializable>  extends SimpleJpaRep
 	/**
 	 * 持久化上下文
 	 */
-	@SuppressWarnings("unused")
 	private EntityManager entityManager;
 	
 	public BaseRepositoryImpl(Class<T> domainClass, EntityManager em) {
@@ -40,7 +39,6 @@ public class BaseRepositoryImpl<T,ID extends Serializable>  extends SimpleJpaRep
 		Query query = entityManager.createNativeQuery(sqlsb.toString());
 		return query.executeUpdate();
 	}
-
-
+	
 
 }

@@ -6,16 +6,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class MyReflectUtils {
+public class MyReflectionUtils {
 	
 	private static Map<String, Map<String, Field>> mainMap = new HashMap<String, Map<String,Field>>();
 	
+	/**private constructor to prevent instantiation*/
+	private MyReflectionUtils(){}
 	/**
 	 * 获取所有访问权限的字段、方法等
 	 * 支持多级
@@ -150,6 +151,8 @@ public class MyReflectUtils {
 			throw new Exception(e.getMessage());
 		}
 	}
-		
+	
+	
+	
 	
 }

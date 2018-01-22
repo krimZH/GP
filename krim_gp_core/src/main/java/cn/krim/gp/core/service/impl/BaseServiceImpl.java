@@ -10,7 +10,7 @@ import cn.krim.gp.core.annotation.Fuzzy;
 import cn.krim.gp.core.model.MyEntity;
 import cn.krim.gp.core.repository.base.SimpleSpecificationBuilder;
 import cn.krim.gp.core.service.BaseService;
-import cn.krim.gp.core.utils.MyReflectUtils;
+import cn.krim.gp.core.utils.MyReflectionUtils;
 
 @Service
 public class BaseServiceImpl implements BaseService {
@@ -20,7 +20,7 @@ public class BaseServiceImpl implements BaseService {
 	public <T extends MyEntity> Specification<T> getConditions(Class<?> clazz,Map<String, Object[]> entityMap) throws Exception {
 		SimpleSpecificationBuilder<T> ssb = new SimpleSpecificationBuilder<>();
 		//获得该类的所有字段映射
-		Map<String, Field> fieldMap = MyReflectUtils.getFieldMap(clazz);
+		Map<String, Field> fieldMap = MyReflectionUtils.getFieldMap(clazz);
 		//对比两个map
 		Object[] fieldName = entityMap.get("fieldName");
 		Object[] fieldValue = entityMap.get("fieldValue");

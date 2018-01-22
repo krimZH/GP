@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import cn.krim.gp.core.model.MyEntity;
-import cn.krim.gp.core.model.users.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

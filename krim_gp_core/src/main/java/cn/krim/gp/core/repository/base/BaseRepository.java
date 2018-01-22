@@ -16,5 +16,6 @@ import org.springframework.data.repository.NoRepositoryBean;
  */
 @NoRepositoryBean
 public interface BaseRepository<T,ID extends Serializable> extends JpaRepository<T, ID>,JpaSpecificationExecutor<T> {
+	@Deprecated
 	int updateEntity(Map<Object, Object> fieldMap, Class<?> entity) throws Exception;
 }
